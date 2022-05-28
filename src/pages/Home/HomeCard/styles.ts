@@ -20,10 +20,20 @@ export const InfoDiv = styled.div`
 
 export const Container = styled.div`
   width: 80%;
-  background: #eee;
   padding: 20px;
   color: #000000;
-  .rene {
-    color: #000000;
+  margin: auto;
+  border-top: 1px solid #eee;
+  div {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    input {
+      min-width: 300px;
+    }
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
   }
 `;
