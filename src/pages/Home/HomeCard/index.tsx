@@ -1,28 +1,67 @@
 import React, { SyntheticEvent } from "react";
-import { Card } from "../../../components/UI/Card";
-import { InfoDiv, Container } from "./styles";
-import {
-  Box,
-  FormControl,
-  FormControlLabel,
-  Input,
-  RadioGroup,
-  Radio,
-  TextField,
-} from "@mui/material";
 import { useState } from "react";
+
+import { Card } from "../../../components/UI/Card";
+import { Button } from "../../../components/UI/Button";
+import { InfoDiv, Container } from "./styles";
+import { FormControlLabel, RadioGroup, Radio, TextField } from "@mui/material";
 
 export function HomeCard(props: any) {
   const [searchType, setSearchType] = useState("cidade");
   const [searchCidade, setSearchCidade] = useState("");
+  const [searchLongitude, setSearchLongitude] = useState("");
+  const [searchLatitude, setSearchLatitude] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   function changeSearchHandler(event: SyntheticEvent, newValue: string) {
     console.log(newValue);
     setSearchType(newValue);
   }
-  function changeSearchCidadeHandler(
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) {
-    setSearchCidade(event.target.value.toString());
+  const formFields =
+    searchType === "cidade" ? (
+      <div>
+        <TextField
+          placeholder="Digite o nome da cidade"
+          label="Cidade"
+          defaultValue=""
+          variant="filled"
+          value={searchCidade}
+          onChange={(e) => {
+            setSearchCidade(e.target.value);
+          }}
+          disabled={isLoading}
+        />
+      </div>
+    ) : (
+      <div>
+        <TextField
+          placeholder="Digite a latitude"
+          label="Latitude"
+          defaultValue=""
+          variant="filled"
+          value={searchLatitude}
+          onChange={(e) => {
+            setSearchLatitude(e.target.value);
+          }}
+          disabled={isLoading}
+        />
+        <TextField
+          placeholder="Digite a longitude"
+          label="Longitude"
+          defaultValue=""
+          variant="filled"
+          value={searchLongitude}
+          onChange={(e) => {
+            setSearchLongitude(e.target.value);
+          }}
+          disabled={isLoading}
+        />
+      </div>
+    );
+  function submitHandler() {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
   }
   return (
     <Card className="homeCard">
@@ -50,16 +89,16 @@ export function HomeCard(props: any) {
         </RadioGroup>
       </InfoDiv>
       <Container>
-        <TextField
-          className="rene"
-          placeholder="Digite o nome da cidade"
-          label="Cidade"
-          defaultValue=""
-          variant="filled"
-          value={searchCidade}
-          onChange={changeSearchCidadeHandler}
-          style={{ color: "blue" }}
-        />
+        {formFields}
+        <div>
+          <Button
+            onClick={submitHandler}
+            className="btn btn-primary"
+            disabled={isLoading}
+          >
+            {isLoading ? "Aguarde ..." : "Criar playlist"}{" "}
+          </Button>
+        </div>
       </Container>
     </Card>
   );
