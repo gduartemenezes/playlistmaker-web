@@ -31,9 +31,16 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     color: #000;
   }
+  body {
+    background: var(--backgound);
+  }
 
   button {
     cursor: pointer;
+  }
+  :disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
   [disabled] {
     opacity: 0.6;
