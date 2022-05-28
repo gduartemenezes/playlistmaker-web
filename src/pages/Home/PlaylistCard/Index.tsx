@@ -2,7 +2,7 @@ import { Card } from "../../../components/UI/Card";
 import { Container, InfoDiv } from "./styles";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Button } from "../../../components/UI/Button";
-import { BsSpotify, BsFillCaretLeftFill } from "react-icons/bs";
+import { BsSpotify } from "react-icons/bs";
 
 type Music = {
   artist: string;
