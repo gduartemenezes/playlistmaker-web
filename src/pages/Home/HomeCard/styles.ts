@@ -14,7 +14,7 @@ export const InfoDiv = styled.div`
   span {
     font-size: 0.8rem;
     font-weight: 300;
-    color: var(--gray-300);
+    color: var(--green);
   }
 `;
 
@@ -34,6 +34,11 @@ export const Container = styled.div`
     }
     @media (max-width: 768px) {
       flex-direction: column;
+    }
+    h5,
+    strong {
+      color: var(--green);
+      font-size: 1rem;
     }
   }
 `;
