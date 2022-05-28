@@ -16,14 +16,14 @@ export const Content = styled.div`
 `;
 
 export const WelcomeSection = styled.div`
+  margin: 0;
   width: 100%;
   height: 387px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 1)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)),
     url(${backgroundImg});
   background-size: 1500px;
-  width: 100%;
+  height: 100%;
   background-position: center;
-  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   align-items: center;
