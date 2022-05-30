@@ -31,9 +31,9 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     color: #000;
   }
-  body {
+  /* body {
     background: var(--backgound);
-  }
+  } */
 
   button {
     cursor: pointer;
