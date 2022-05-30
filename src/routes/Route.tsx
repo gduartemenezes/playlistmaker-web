@@ -3,7 +3,7 @@ import {
   Route as ReactDOMRoute,
 } from "react-router-dom";
 interface RouteProps extends ReactDOMRouteProps {
-  component: React.ComponentType;
+  component: any;
 }
 
 const Route: React.FC<RouteProps> = ({ component: Component, ...rest }) => {
