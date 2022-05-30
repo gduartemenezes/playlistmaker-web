@@ -1,9 +1,6 @@
 import { Container, Content, WelcomeSection } from "./styles";
 import { HomeCard } from "./HomeCard";
-import TextField from "@mui/material/TextField";
-import { useState } from "react";
 export function Home() {
-  const [myValue, setMyValue] = useState("");
   return (
     <Container>
       <Content>
