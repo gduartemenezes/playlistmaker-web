@@ -2,20 +2,7 @@ import { Card } from "../../../components/UI/Card";
 import { Container, InfoDiv } from "./styles";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Button } from "../../../components/UI/Button";
-import { BsSpotify } from "react-icons/bs";
-
-type Music = {
-  artist: string;
-  id: number;
-  title: string;
-};
-interface PlaylistCardProps {
-  cityName: string;
-  countryName: string;
-  cityTemperature: number;
-  playlist: Music[];
-  onCreatePlaylist: () => void;
-}
+import { PlaylistCardProps } from "../../../interfaces";
 
 export function PlaylistCard(props: PlaylistCardProps) {
   const columns: GridColDef[] = [
@@ -32,12 +19,9 @@ export function PlaylistCard(props: PlaylistCardProps) {
     {
       field: "title",
       headerName: "Título",
-      width: 200,
+      width: 380,
     },
   ];
-  function startPlaylistHandler() {
-    console.log("startPlaylistHandler");
-  }
 
   const customMessage =
     props.cityTemperature > 30
@@ -58,22 +42,14 @@ export function PlaylistCard(props: PlaylistCardProps) {
         <DataGrid
           rows={props.playlist}
           columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
         />
       </InfoDiv>
       <Container>
         <div>
-          <Button
-            onClick={props.onCreatePlaylist}
-            width="200px"
-            backgroundColor="#f9fcf2"
-            color="#222"
-          >
+          <Button onClick={props.onCreatePlaylist} width="200px">
             Criar nova playlist
-          </Button>
-          <Button onClick={startPlaylistHandler}>
-            Ouvir &nbsp; <BsSpotify />
           </Button>
         </div>
       </Container>
