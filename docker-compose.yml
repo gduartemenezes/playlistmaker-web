@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  web:
+    build: .
+    container_name: web-playlistmaker
+    # restart: always
+    ports:
+      - 3000:3001
+    volumes:
+      - .:/usr/web
+
+volumes:
+  pgdata:
