@@ -1,17 +1,27 @@
 import React, { SyntheticEvent } from "react";
 import { useState } from "react";
-
+import { toast } from "react-toastify";
+import { api } from "../../../services/api";
 import { Card } from "../../../components/UI/Card";
 import { Button } from "../../../components/UI/Button";
 import { InfoDiv, Container } from "./styles";
 import { FormControlLabel, RadioGroup, Radio, TextField } from "@mui/material";
 import { PlaylistCard } from "../PlaylistCard/Index";
+import { PlaylistCardProps } from "../../../interfaces";
 
 export function HomeCard(props: any) {
   const [searchType, setSearchType] = useState("cidade");
   const [searchCidade, setSearchCidade] = useState("");
   const [searchLongitude, setSearchLongitude] = useState("");
   const [searchLatitude, setSearchLatitude] = useState("");
+  const [playlistCardState, setPlaylistCardState] = useState<PlaylistCardProps>(
+    {
+      cityName: "",
+      cityTemperature: 0,
+      playlist: [],
+      onCreatePlaylist: () => {},
+    }
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
   function changeSearchHandler(event: SyntheticEvent, newValue: string) {
@@ -25,11 +35,6 @@ export function HomeCard(props: any) {
     setShowPlaylist(false);
   }
 
-  const playlist = [
-    { id: 0, artist: "Drake", title: "Hotline Bling" },
-    { id: 1, artist: "Drake", title: "Hotline Bling" },
-    { id: 2, artist: "Drake", title: "Hotline Bling" },
-  ];
   const formFields =
     searchType === "cidade" ? (
       <div>
@@ -68,12 +73,33 @@ export function HomeCard(props: any) {
         />
       </div>
     );
-  function submitHandler() {
+  async function submitHandler() {
     setIsLoading(true);
-    setTimeout(() => {
+    const createdPlaylist = {} as PlaylistCardProps;
+    try {
+      let wheatherRequestString =
+        searchType === "cidade"
+          ? `/weather/?city=${searchCidade
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")}`
+          : `/weather/?lat=${searchLatitude}&lon=${searchLongitude}`;
+      let currentWeather = await api.get(wheatherRequestString);
+      console.log(currentWeather);
+      createdPlaylist.cityName = currentWeather.data.name;
+      createdPlaylist.cityTemperature = currentWeather.data.main.temp - 273.15;
+      let spotifyResponse = await api.get(
+        `/playlist/?temperature=${currentWeather.data.main.temp}`
+      );
+      console.log(spotifyResponse);
+      createdPlaylist.playlist = spotifyResponse.data.tracks;
+      createdPlaylist.onCreatePlaylist = createNewPlaylistHandler;
+      setPlaylistCardState(createdPlaylist);
       setIsLoading(false);
       setShowPlaylist(true);
-    }, 3000);
+    } catch (error: any) {
+      toast.error(error.message);
+      setIsLoading(false);
+    }
   }
   return !showPlaylist ? (
     <Card className="homeCard">
@@ -122,11 +148,10 @@ export function HomeCard(props: any) {
     </Card>
   ) : (
     <PlaylistCard
-      cityName="Goiania"
-      cityTemperature={35}
-      countryName="Brasil"
-      playlist={playlist}
-      onCreatePlaylist={createNewPlaylistHandler}
+      cityName={playlistCardState.cityName}
+      cityTemperature={playlistCardState.cityTemperature}
+      playlist={playlistCardState.playlist}
+      onCreatePlaylist={playlistCardState.onCreatePlaylist}
     />
   );
 }
