@@ -1,6 +1,6 @@
 FROM node:12.22.7-buster
 
-WORKDIR /usr/web
+WORKDIR /usr/web-playlistmaker
 
 COPY package.json ./
 
@@ -8,8 +8,10 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn start
+EXPOSE 3000
 
-EXPOSE 3001
+CMD [ "yarn", "start" ]
+
+
 
 

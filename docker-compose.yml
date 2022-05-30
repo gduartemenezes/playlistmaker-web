@@ -4,11 +4,11 @@ services:
   web:
     build: .
     container_name: web-playlistmaker
-    # restart: always
+    restart: always
     ports:
-      - 3000:3001
+      - 3000:3000
     volumes:
-      - .:/usr/web
+      - .:/usr/web-playlistmaker
 
 volumes:
   pgdata:
